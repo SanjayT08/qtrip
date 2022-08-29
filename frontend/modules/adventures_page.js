@@ -113,9 +113,8 @@ function filterFunction(list, filters) {
   else {
     filteredList = list;
   }
-  return filteredList;
   // Place holder for functionality to work in the Stubs
-  return list;
+  return filteredList;
 }
 
 //Implementation of localStorage API to save filters to local storage. This should get called everytime an onChange() happens in either of filter dropdowns
@@ -131,9 +130,8 @@ function getFiltersFromLocalStorage() {
   // TODO: MODULE_FILTERS
   // 1. Get the filters from localStorage and return String read as an object
   const filters = JSON.parse(localStorage.getItem('filters'))
-  return filters;
   // Place holder for functionality to work in the Stubs
-  return null;
+  return filters;
 }
 
 //Implementation of DOM manipulation to add the following filters to DOM :
