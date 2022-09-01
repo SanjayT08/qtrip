@@ -5,7 +5,7 @@ async function init() {
   let cities = await fetchCities();
 
   //Updates the DOM with the cities
-  cities.forEach((key) => {
+  cities.map((key) => {
     addCityToDOM(key.id, key.city, key.description, key.image);
   });
 }
@@ -17,7 +17,7 @@ async function fetchCities() {
   try{
     const res = await fetch(config.backendEndpoint + "/cities")
     const data = await res.json();
-    return data
+    return data;
   } 
   catch(err) {
     return null
@@ -28,19 +28,20 @@ async function fetchCities() {
 function addCityToDOM(id, city, description, image) {
   // TODO: MODULE_CITIES
   // 1. Populate the City details and insert those details into the DOM
-  let element = document.createElement('div');
-  element.className = 'col-12 col-md-3  col-sm-6 mb-4';
-  element.innerHTML = `<a href="pages/adventures/?city=${id}" id='${id}'>
-    <div class= " tile ">
-      <img src=${image} class="img-fluid rounded">
-      <div class="tile-text">
-        <h5>${city}</h5>
-        <p>${description}</p>
+  let divElement = document.createElement("div");
+  divElement.className = "col-6 col-md-4 col-lg-3 mb-4";
+  divElement.innerHTML = `
+    <a href="pages/adventures/?city=${id}" id="${id}">
+      <div class="tile">
+        <div class="tile-text text-center">
+          <h5>${city}</h5>
+          <p>${description}</p>
+        </div>
+      <img class="img-responsive" src="${image}">
       </div>
-    </div>
-  </a>`
-
-  document.getElementById('data').appendChild(element)
+    </a>
+  `;
+  document.getElementById("data").appendChild(divElement);
 }
 
 export { init, fetchCities, addCityToDOM };

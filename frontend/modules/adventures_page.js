@@ -1,23 +1,17 @@
-
 import config from "../conf/index.js";
 
 //Implementation to extract city from query params
 function getCityFromURL(search) {
   // TODO: MODULE_ADVENTURES
   // 1. Extract the city id from the URL's Query Param and return it
-
-  const urlParams = new URLSearchParams(search);
-  for (const value of urlParams.values()) {
-    return value;
-
-  }
+  let params = new URLSearchParams(search).get("city");
+  return params;
 }
 
 //Implementation of fetch call with a paramterized input based on city
 async function fetchAdventures(city) {
   // TODO: MODULE_ADVENTURES
   // 1. Fetch adventures using the Backend API and return the data
-
   try {
     const res = await fetch(config.backendEndpoint + `/adventures?city=${city}`);
     const data = await res.json();
@@ -32,29 +26,29 @@ async function fetchAdventures(city) {
 function addAdventureToDOM(adventures) {
   // TODO: MODULE_ADVENTURES
   // 1. Populate the Adventure Cards and insert those details into the DOM
-  const dataContianer = document.getElementById("data");
-   
-  for (let element of adventures) {
-    const cardElement = document.createElement("div");
-    cardElement.classList.add("col", "col-md-6", "col-lg-4", "mb-4");
-    const card = `<div class="card tile" style="width: 18rem;">
-    <a href="detail/?adventure=${element.id}" id=${element.id}>
-    <img class="card-img-top activity-card-image" style="height: 400px; width: 300px" src="${element.image}" alt="Card image cap">
-    <div class="category-banner">${element.category}</div>
-    <div class="card-body">
-      <div class="d-flex justify-content-between">
-        <p>${element.name}</p>
-        <p> &#8377; ${element.costPerHead}</p>
-      </div>
-      <div class="d-flex justify-content-between">
-        <p>Duration</p>
-        <p>${element.duration} Hour</p>
-      </div>
-     </div></a>
-    </div>`;
-    cardElement.innerHTML = card;
-    dataContianer.appendChild(cardElement);
-  }
+  adventures.forEach((key) => {
+    let div = document.createElement("div");
+    div.setAttribute("class", "col-6 col-lg-3 mb-4 position-relative");
+
+    div.innerHTML = `
+      <div class="category-banner">${key.category}</div>
+      <a class="activity-card" href="detail/?adventure=${key.id}" id="${key.id}">
+        <img src="${key.image}" />
+        <div class="card-body text-center">
+          <div class="d-md-flex justify-content-between">
+              <h5>${key.name}</h5>
+              <p>₹${key.costPerHead}</p>
+          </div>
+          <div class="d-md-flex justify-content-between">
+              <h5>Duration</h5>
+              <p>${key.duration} Hours</p>
+          </div>
+        </div>
+      </a>
+    `;
+
+    document.getElementById("data").appendChild(div);
+  });
 }
 
 
